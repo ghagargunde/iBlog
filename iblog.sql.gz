@@ -1,0 +1,207 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jun 15, 2022 at 07:19 AM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `iblog`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `description` text DEFAULT NULL,
+  `meta_title` varchar(191) NOT NULL,
+  `meta_description` mediumtext DEFAULT NULL,
+  `meta_keyword` mediumtext DEFAULT NULL,
+  `navbar_status` tinyint(4) DEFAULT 0,
+  `status` tinyint(4) DEFAULT 0 COMMENT '0=visible, 1=hidden,2=deleted',
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `navbar_status`, `status`, `created_at`) VALUES
+(1, 'html tag', 'html', 'h1 is a big heading ', 'HTML-CSS', '  html is scripting language  ', '    html is scripting language', 1, 2, '2022-05-10 19:13:04'),
+(2, 'HTML ', 'All-about-html', ' html is scripting language            ', 'html class', '  html is scripting language            ', '             html tutorial', 0, 0, '2022-05-10 19:21:38'),
+(3, 'CSS', 'All-about-css', ' css is cascading style sheet      ', 'css', 'css is cascading style sheet      ', 'css style', 0, 0, '2022-05-12 04:49:11'),
+(4, 'PHP', 'All-about-php', ' php is a scripting language  ', ' php ', ' php is a scripting language  ', 'php,php tutorial', 0, 0, '2022-05-12 15:50:47'),
+(5, 'jQuery', 'jquery ', 'jquery is javascript library', 'jquery', 'jquery  ', 'jquery', 0, 2, '2022-05-14 19:29:04'),
+(6, 'Mysql', 'mysql', ' Open-Source Relational Database Management System', 'MySQL', ' MySQL has stand-alone clients that allow users to interact directly with a MySQL database using SQL', ' mysql ,database', 0, 0, '2022-05-19 17:12:23'),
+(7, 'Python', 'Python', ' Python is a popular programming language.\r\n\r\nPython can be used on a server to create web applications.', 'programming language.', ' Python is a popular programming language. It was created by Guido van Rossum, and released in 1991.', ' python', 0, 0, '2022-05-19 17:14:46'),
+(8, 'jQuery', 'jQuery', ' jQuery is a JavaScript Library.\r\njQuery greatly simplifies JavaScript programming.\r\njQuery is easy to learn.', 'JavaScript Library', ' jQuery takes a lot of common tasks that require many lines of JavaScript code to accomplish, and wraps them into methods that you can call with a single line of code.', ' jQuery, learn jQuery', 0, 0, '2022-05-19 17:16:53'),
+(9, 'Git', 'git', ' Git is a version control system.\r\nGit helps you keep track of code changes.\r\nGit is used to collaborate on code.', 'Git is a popular version control system.', 'Manage projects with Repositories\r\nClone a project to work on a local copy', ' Git', 0, 0, '2022-05-19 17:19:47'),
+(10, 'Node.js', 'Node-js', 'Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser. ', 'Node.js', ' Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine', ' Node.js', 0, 0, '2022-05-19 17:24:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chatbot`
+--
+
+CREATE TABLE `chatbot` (
+  `id` int(11) NOT NULL,
+  `queries` varchar(300) NOT NULL,
+  `replies` varchar(300) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `chatbot`
+--
+
+INSERT INTO `chatbot` (`id`, `queries`, `replies`) VALUES
+(1, 'hi|Hi|Hey|hey|hii|Hii|hyy|heyy|hello|Hello', 'Hello Sir!'),
+(2, 'i have a problem|problem|', 'How may I help you sir?'),
+(3, 'i am sick|unwell|sick|feel sick|i am not feeling well|i am ill|', 'Exactly what problem do you have sir? Please tell the treatment you need!'),
+(4, 'stomach|stomach ache|my stomach pains|intestine|intestine pain|appendix|appendix pains|i have appendix|peptic ulsars|', 'You can visit to the Gastroenterologist.'),
+(5, 'child|children|baby|my child is sick', 'Try visiting our Pediatrician'),
+(6, 'where are doctors|help|consultations|i need consultation|doctors', 'Move to the Home Page. There are all doctors visible.'),
+(7, 'eye|eye surgeon|my eye needs aid|my eyes pain| i need eye surgeon|eye surgery', 'Try visiting our Opthamologist'),
+(8, 'who are you', 'I am a iClinic Virtual Assistant'),
+(9, 'Where is your contact|where is your contact|how should i contact|contact|how to contact you|', 'Select Contact Us from Navigation bar or leave a Suggestion on Write for us!'),
+(10, 'how is your service|service|quality|do you provide quality|', 'We provide world class service and best Doctors in the city'),
+(11, 'my child is ill|my son is ill|my son is ', 'Please visit the Pediatrics section.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posts`
+--
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `name` varchar(191) NOT NULL,
+  `slug` varchar(191) NOT NULL,
+  `description` mediumtext DEFAULT NULL,
+  `image` varchar(191) DEFAULT NULL,
+  `meta_title` varchar(191) NOT NULL,
+  `meta_description` mediumtext NOT NULL,
+  `meta_keyword` mediumtext NOT NULL,
+  `status` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `posts`
+--
+
+INSERT INTO `posts` (`id`, `category_id`, `name`, `slug`, `description`, `image`, `meta_title`, `meta_description`, `meta_keyword`, `status`, `created_at`) VALUES
+(16, 3, 'Basic CSS ', 'learn-s', '<p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\"><b>Cascading Style Sheets</b>&nbsp;(<b>CSS</b>) is a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Style_sheet_language\" title=\"Style sheet language\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">style sheet language</a>&nbsp;used for describing the&nbsp;<a href=\"https://en.wikipedia.org/wiki/Presentation_semantics\" title=\"Presentation semantics\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">presentation</a>&nbsp;of a document written in a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Markup_language\" title=\"Markup language\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">markup language</a>&nbsp;such as&nbsp;<a href=\"https://en.wikipedia.org/wiki/HTML\" title=\"HTML\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">HTML</a>.<sup id=\"cite_ref-1\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/CSS#cite_note-1\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[1]</a></sup>&nbsp;CSS is a cornerstone technology of the&nbsp;<a href=\"https://en.wikipedia.org/wiki/World_Wide_Web\" title=\"World Wide Web\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">World Wide Web</a>, alongside HTML and&nbsp;<a href=\"https://en.wikipedia.org/wiki/JavaScript\" title=\"JavaScript\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">JavaScript</a>.<sup id=\"cite_ref-2\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/CSS#cite_note-2\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[2]</a></sup></p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">CSS is designed to enable the separation of presentation and content, including&nbsp;<a href=\"https://en.wikipedia.org/wiki/Page_layout\" title=\"Page layout\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">layout</a>,&nbsp;<a href=\"https://en.wikipedia.org/wiki/Color\" title=\"Color\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">colors</a>, and&nbsp;<a href=\"https://en.wikipedia.org/wiki/Typeface\" title=\"Typeface\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">fonts</a>.<sup id=\"cite_ref-3\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/CSS#cite_note-3\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[3]</a></sup>&nbsp;This separation can improve content&nbsp;<a href=\"https://en.wikipedia.org/wiki/Accessibility\" title=\"Accessibility\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">accessibility</a>; provide more flexibility and control in the specification of presentation characteristics; enable multiple&nbsp;<a href=\"https://en.wikipedia.org/wiki/Web_page\" title=\"Web page\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">web pages</a>&nbsp;to share formatting by specifying the relevant CSS in a separate .css file, which reduces complexity and repetition in the structural content; and enable the .css file to be&nbsp;<a href=\"https://en.wikipedia.org/wiki/Cache_(computing)\" title=\"Cache (computing)\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">cached</a>&nbsp;to improve the page load speed between the pages that share the file and its formatting.</p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">Separation of formatting and content also makes it feasible to present the same markup page in different styles for different rendering methods, such as on-screen, in print, by voice (via speech-based browser or&nbsp;<a href=\"https://en.wikipedia.org/wiki/Screen_reader\" title=\"Screen reader\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">screen reader</a>), and on&nbsp;<a href=\"https://en.wikipedia.org/wiki/Braille_display\" class=\"mw-redirect\" title=\"Braille display\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Braille-based</a>&nbsp;tactile devices. CSS also has rules for alternate formatting if the content is accessed on a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Mobile_device\" title=\"Mobile device\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">mobile device</a>.<sup id=\"cite_ref-4\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/CSS#cite_note-4\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[4]</a></sup></p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">The name&nbsp;<i>cascading</i>&nbsp;comes from the specified priority scheme to determine which style rule applies if more than one rule matches a particular element. This cascading priority scheme is predictable.</p><div><br></div>    ', '1652979483.jpg', 'css', 'css  ', ' css, css tutorial    ', 0, '2022-05-17 04:04:11'),
+(17, 2, 'History ', 'html-history', '<p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">In 1980,&nbsp;<a href=\"https://en.wikipedia.org/wiki/Physicist\" title=\"Physicist\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">physicist</a>&nbsp;<a href=\"https://en.wikipedia.org/wiki/Tim_Berners-Lee\" title=\"Tim Berners-Lee\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Tim Berners-Lee</a>, a contractor at&nbsp;<a href=\"https://en.wikipedia.org/wiki/CERN\" title=\"CERN\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">CERN</a>, proposed and prototyped&nbsp;<a href=\"https://en.wikipedia.org/wiki/ENQUIRE\" title=\"ENQUIRE\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">ENQUIRE</a>, a system for CERN researchers to use and share documents. In 1989, Berners-Lee wrote a memo proposing an&nbsp;<a href=\"https://en.wikipedia.org/wiki/Internet\" title=\"Internet\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Internet</a>-based&nbsp;<a href=\"https://en.wikipedia.org/wiki/Hypertext\" title=\"Hypertext\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">hypertext</a>&nbsp;system.<sup id=\"cite_ref-3\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/HTML#cite_note-3\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[3]</a></sup>&nbsp;Berners-Lee specified HTML and wrote the browser and server software in late 1990. That year, Berners-Lee and CERN&nbsp;<a href=\"https://en.wikipedia.org/wiki/Data_system\" title=\"Data system\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">data systems</a>&nbsp;engineer&nbsp;<a href=\"https://en.wikipedia.org/wiki/Robert_Cailliau\" title=\"Robert Cailliau\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Robert Cailliau</a>&nbsp;collaborated on a joint request for funding, but the project was not formally adopted by CERN. In his personal notes<sup id=\"cite_ref-4\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/HTML#cite_note-4\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[4]</a></sup>&nbsp;from 1990 he listed<sup id=\"cite_ref-5\" class=\"reference\" style=\"line-height: 1; unicode-bidi: isolate; white-space: nowrap; font-size: 11.2px;\"><a href=\"https://en.wikipedia.org/wiki/HTML#cite_note-5\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">[5]</a></sup>&nbsp;\"some of the many areas in which hypertext is used\" and put an&nbsp;<a href=\"https://en.wikipedia.org/wiki/Encyclopedia\" title=\"Encyclopedia\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">encyclopedia</a>&nbsp;first.</p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">HTML is a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Markup_language\" title=\"Markup language\" style=\"text-decoration: none; color: rgb(6, 69, 173); background: none rgb(255, 255, 255); font-family: sans-serif; font-weight: 400;\">markup language</a>&nbsp;that&nbsp;<a href=\"https://en.wikipedia.org/wiki/Web_browser\" title=\"Web browser\" style=\"text-decoration: none; color: rgb(6, 69, 173); background: none rgb(255, 255, 255); font-family: sans-serif; font-weight: 400;\">web browsers</a>&nbsp;use to interpret and&nbsp;<a href=\"https://en.wikipedia.org/wiki/Typesetting\" title=\"Typesetting\" style=\"text-decoration: none; color: rgb(6, 69, 173); background: none rgb(255, 255, 255); font-family: sans-serif; font-weight: 400;\">compose</a>&nbsp;text, images, and other material into visual or audible web pages.<br></p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\"><br></p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\"><br></p>  ', '1652979974.jpg', 'html, tutorial', '     In 1980, physicist Tim Berners-Lee, a contractor at CERN, proposed and prototyped ENQUIRE, a system for CERN researchers to use and share documents. In 1989, Berners-Lee wrote a memo proposing an Internet-based hypertext system.', ' tutorial, html tutorial ,html history         ', 0, '2022-05-18 03:31:24'),
+(18, 2, 'Basic HTML', '123', '<p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\">The&nbsp;<b>HyperText Markup Language</b>&nbsp;or&nbsp;<b>HTML</b>&nbsp;is the standard&nbsp;<a href=\"https://en.wikipedia.org/wiki/Markup_language\" title=\"Markup language\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">markup language</a>&nbsp;for documents designed to be displayed in a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Web_browser\" title=\"Web browser\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">web browser</a>. It can be assisted by technologies such as&nbsp;<a href=\"https://en.wikipedia.org/wiki/Cascading_Style_Sheets\" class=\"mw-redirect\" title=\"Cascading Style Sheets\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Cascading Style Sheets</a>&nbsp;(CSS) and&nbsp;<a href=\"https://en.wikipedia.org/wiki/Scripting_language\" title=\"Scripting language\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">scripting languages</a>&nbsp;such as&nbsp;<a href=\"https://en.wikipedia.org/wiki/JavaScript\" title=\"JavaScript\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">JavaScript</a>.</p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/Web_browser\" title=\"Web browser\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">Web browsers</a>&nbsp;receive HTML documents from a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Web_server\" title=\"Web server\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">web server</a>&nbsp;or from local storage and&nbsp;<a href=\"https://en.wikipedia.org/wiki/Browser_engine\" title=\"Browser engine\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">render</a>&nbsp;the documents into multimedia web pages. HTML describes the structure of a&nbsp;<a href=\"https://en.wikipedia.org/wiki/Web_page\" title=\"Web page\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">web page</a>&nbsp;<a href=\"https://en.wikipedia.org/wiki/Semantic_Web\" title=\"Semantic Web\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">semantically</a>&nbsp;and originally included cues for the appearance of the document.</p><p style=\"margin: 0.5em 0px; color: rgb(32, 33, 34); font-size: 14px;\"><a href=\"https://en.wikipedia.org/wiki/HTML_element\" title=\"HTML element\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">HTML elements</a>&nbsp;are the building blocks of HTML pages. With HTML constructs,&nbsp;<a href=\"https://en.wikipedia.org/wiki/HTML_element#Images_and_objects\" title=\"HTML element\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">images</a>&nbsp;and other objects such as&nbsp;<a href=\"https://en.wikipedia.org/wiki/Fieldset\" class=\"mw-redirect\" title=\"Fieldset\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">interactive forms</a>&nbsp;may be embedded into the rendered page. HTML provides a means to create&nbsp;<a href=\"https://en.wikipedia.org/wiki/Structured_document\" title=\"Structured document\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">structured documents</a>&nbsp;by denoting structural&nbsp;<a href=\"https://en.wikipedia.org/wiki/Semantics\" title=\"Semantics\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">semantics</a>&nbsp;for text such as headings, paragraphs, lists,&nbsp;<a href=\"https://en.wikipedia.org/wiki/Hyperlink\" title=\"Hyperlink\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">links</a>, quotes and other items. HTML elements are delineated by&nbsp;<i>tags</i>, written using&nbsp;<a href=\"https://en.wikipedia.org/wiki/Bracket#Angle_brackets\" title=\"Bracket\" style=\"text-decoration: none; color: rgb(6, 69, 173); background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial;\">angle brackets</a>. Tags such as&nbsp;<code class=\"mw-highlight mw-highlight-lang-html mw-content-ltr\" id=\"\" dir=\"ltr\" style=\"font-family: monospace, monospace; background: rgb(248, 248, 248); color: rgb(0, 0, 0); border: 1px solid rgb(234, 236, 240); border-radius: 2px; padding: 1px 4px; unicode-bidi: embed;\"><span class=\"p\">&lt;</span><span class=\"nt\" style=\"color: rgb(0, 128, 0); font-weight: bold;\">img</span>&nbsp;<span class=\"p\">/&gt;</span></code>&nbsp;and&nbsp;<code class=\"mw-highlight mw-highlight-lang-html mw-content-ltr\" id=\"\" dir=\"ltr\" style=\"font-family: monospace, monospace; background: rgb(248, 248, 248); color: rgb(0, 0, 0); border: 1px solid rgb(234, 236, 240); border-radius: 2px; padding: 1px 4px; unicode-bidi: embed;\"><span class=\"p\">&lt;</span><span class=\"nt\" style=\"color: rgb(0, 128, 0); font-weight: bold;\">input</span>&nbsp;<span class=\"p\">/&gt;</span></code>&nbsp;directly introduce content into the page. Other tags such as&nbsp;<code class=\"mw-highlight mw-highlight-lang-html mw-content-ltr\" id=\"\" dir=\"ltr\" style=\"font-family: monospace, monospace; background: rgb(248, 248, 248); color: rgb(0, 0, 0); border: 1px solid rgb(234, 236, 240); border-radius: 2px; padding: 1px 4px; unicode-bidi: embed;\"><span class=\"p\">&lt;</span><span class=\"nt\" style=\"color: rgb(0, 128, 0); font-weight: bold;\">p</span><span class=\"p\">&gt;</span></code>&nbsp;surround and provide information about document text and may include other tags as sub-elements. Browsers do not display the HTML tags but use them to interpret the content of the page.</p>   ', '1652979213.jpg', 'html', ' html   ', ' html  ', 0, '2022-05-19 09:15:24'),
+(19, 4, 'Basic PHP ', 'learn-PHP', '<p style=\"box-sizing: inherit; margin-top: 1em; margin-bottom: 1em; font-size: 15px; font-family: Verdana, sans-serif;\"><b>PHP TUTORIAl</b></p><p style=\"box-sizing: inherit; margin-top: 1em; margin-bottom: 1em; font-size: 15px; font-family: Verdana, sans-serif;\"><b><br></b></p><p style=\"box-sizing: inherit; margin-top: 1em; margin-bottom: 1em; font-size: 15px; font-family: Verdana, sans-serif;\">PHP is server <span style=\"background-color: rgb(255, 255, 0);\">scripting</span> language, and a powerful tool for making dynamic and interactive web pages.</p><p style=\"box-sizing: inherit; margin-top: 1em; margin-bottom: 1em; font-size: 15px; font-family: Verdana, sans-serif;\"><br></p><p style=\"box-sizing: inherit; margin-top: 1em; margin-bottom: 1em; font-size: 15px; font-family: Verdana, sans-serif;\"><br></p><h4 style=\"box-sizing: inherit; font-size: 32px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\"><br></h4>       ', '1652977948.jpg', 'php', 'PHP is server scripting language ', 'php,basic tutorial     ', 0, '2022-05-19 09:21:21'),
+(21, 7, 'Learn Python', 'python', '<h2 style=\"box-sizing: inherit; font-size: 32px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\">What is Python?</h2><p style=\"box-sizing: inherit; margin-top: 1.2em; margin-bottom: 1.2em; font-size: 15px; font-family: Verdana, sans-serif;\">Python is a popular programming language. It was created by Guido van Rossum, and released in 1991.</p><p style=\"box-sizing: inherit; margin-top: 1.2em; margin-bottom: 1.2em; font-size: 15px; font-family: Verdana, sans-serif;\">It is used for:</p><ul style=\"box-sizing: inherit; font-family: Verdana, sans-serif; font-size: 15px;\"><li style=\"box-sizing: inherit;\">web development (server-side),</li><li style=\"box-sizing: inherit;\">software development,</li><li style=\"box-sizing: inherit;\">mathematics,</li><li style=\"box-sizing: inherit;\">system scripting.</li></ul><h3 style=\"box-sizing: inherit; font-size: 24px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\">What can Python do?</h3><ul style=\"box-sizing: inherit; font-family: Verdana, sans-serif; font-size: 15px;\"><li style=\"box-sizing: inherit;\">Python can be used on a server to create web applications.</li><li style=\"box-sizing: inherit;\">Python can be used alongside software to create workflows.</li><li style=\"box-sizing: inherit;\">Python can connect to database systems. It can also read and modify files.</li><li style=\"box-sizing: inherit;\">Python can be used to handle big data and perform complex mathematics.</li><li style=\"box-sizing: inherit;\">Python can be used for rapid prototyping, or for production-ready software development.</li></ul><h3 style=\"box-sizing: inherit; font-size: 24px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\">Why Python?</h3><ul style=\"box-sizing: inherit; font-family: Verdana, sans-serif; font-size: 15px;\"><li style=\"box-sizing: inherit;\">Python works on different platforms (Windows, Mac, Linux, Raspberry Pi, etc).</li><li style=\"box-sizing: inherit;\">Python has a simple syntax similar to the English language.</li><li style=\"box-sizing: inherit;\">Python has syntax that allows developers to write programs with fewer lines than some other programming languages.</li><li style=\"box-sizing: inherit;\">Python runs on an interpreter system, meaning that code can be executed as soon as it is written. This means that prototyping can be very quick.</li><li style=\"box-sizing: inherit;\">Python can be treated in a procedural way, an object-oriented way or a functional way.</li></ul><h3 style=\"box-sizing: inherit; font-size: 24px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\">Good to know</h3><ul style=\"box-sizing: inherit; font-family: Verdana, sans-serif; font-size: 15px;\"><li style=\"box-sizing: inherit;\">The most recent major version of Python is Python 3, which we shall be using in this tutorial. However, Python 2, although not being updated with anything other than security updates, is still quite popular.</li><li style=\"box-sizing: inherit;\">In this tutorial Python will be written in a text editor. It is possible to write Python in an Integrated Development Environment, such as Thonny, Pycharm, Netbeans or Eclipse which are particularly useful when managing larger collections of Python files.</li></ul><h3 style=\"box-sizing: inherit; font-size: 24px; font-family: &quot;Segoe UI&quot;, Arial, sans-serif; margin: 10px 0px;\">Python Syntax compared to other programming languages</h3><ul style=\"box-sizing: inherit; font-family: Verdana, sans-serif; font-size: 15px;\"><li style=\"box-sizing: inherit;\">Python was designed for readability, and has some similarities to the English language with influence from mathematics.</li><li style=\"box-sizing: inherit;\">Python uses new lines to complete a command, as opposed to other programming languages which often use semicolons or parentheses.</li><li style=\"box-sizing: inherit;\">Python relies on indentation, using whitespace, to define scope; such as the scope of loops, functions and classes. Other programming languages often use curly-brackets for this purpose.</li></ul> ', '1653539595.jpg', 'Python basic', ' Python is a popular programming language.\r\n\r\nPython can be used on a server to create web applications.', ' python,lern pyython', 0, '2022-05-26 04:33:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(191) NOT NULL,
+  `lname` varchar(191) NOT NULL,
+  `email` varchar(191) NOT NULL,
+  `password` varchar(191) NOT NULL,
+  `role_as` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=user,1=admin,2=superadmin',
+  `status` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `fname`, `lname`, `email`, `password`, `role_as`, `status`, `created_at`) VALUES
+(2, 'Samyak', 'Ghagargunde', 'samyak.ghagargunde19@vit.edu', '123', 2, 0, '2022-05-07 20:18:15'),
+(3, 'om', 'gore', 'om@gmail.com', '123', 1, 0, '2022-05-07 20:42:25'),
+(4, 'sahil', 'khoke', 'sahil@gmail.com', '123', 0, 0, '2022-05-08 12:37:36'),
+(6, 'Sanket', 'Raut', 'sanket19@vit.edu', '123', 1, 0, '2022-05-09 18:34:04'),
+(8, 'pratik', 'lohe', 'pratik@gmail.com', '123', 0, 0, '2022-05-11 19:19:44'),
+(9, 'dikshant', 'g', 'dikshant@gmail.com', '123', 0, 0, '2022-05-19 17:59:39');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chatbot`
+--
+ALTER TABLE `chatbot`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `posts`
+--
+ALTER TABLE `posts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `chatbot`
+--
+ALTER TABLE `chatbot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
